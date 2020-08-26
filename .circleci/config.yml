@@ -19,6 +19,28 @@ workflows:
               only:
                 - develop
       - docker-buildx/publish:
+          name: build_deploy_docker_master
+          context: docker-publishing
+          checkout: true
+          attach-workspace: true
+          image: foodlestech/logzio-docker-collector-logs
+          tag: master
+          filters:
+            branches:
+              only:
+                - master
+      - docker-buildx/publish:
+          name: build_deploy_docker_beta
+          context: docker-publishing
+          checkout: true
+          attach-workspace: true
+          image: foodlestech/logzio-docker-collector-logs
+          tag: beta
+          filters:
+            branches:
+              only:
+                - /^release\/.*/
+      - docker-buildx/publish:
           name: build_deploy_docker_tag
           context: docker-publishing
           checkout: true
