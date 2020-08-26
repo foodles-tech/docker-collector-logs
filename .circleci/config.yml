@@ -17,7 +17,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - master
       - docker-buildx/publish:
           name: build_deploy_docker_tag
           context: docker-publishing
