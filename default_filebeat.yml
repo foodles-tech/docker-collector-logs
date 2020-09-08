@@ -1,9 +1,10 @@
 ############################# Filebeat #####################################
 
 filebeat.inputs:
-- type: container
-  paths:
-    - '/var/lib/docker/containers/*/*.log'
+- type: docker
+  containers:
+    path: /var/lib/docker/containers
+    ids: '*'
   fields_under_root: true
   processors:
   - add_docker_metadata: ~
@@ -17,4 +18,4 @@ output:
   logstash:
     hosts: []
     ssl:
-      certificate_authorities: [/etc/pki/tls/certs/SectigoRSADomainValidationSecureServerCA.crt]
+      certificate_authorities: [/etc/pki/tls/certs/TrustExternalCARoot_and_USERTrustRSAAAACA.crt]
