@@ -1,6 +1,6 @@
 FROM arm32v7/python:3.7-alpine
 
-ENV PACKAGE=filebeat-7.9.0-linux-armv7_32.tar.gz
+ENV PACKAGE=filebeat-6.5.4-arm32v7.tar.gz
 
 
 RUN mkdir -p /opt/filebeat/docker-colletor-logs && \
@@ -14,9 +14,9 @@ COPY filebeat-yml-script.py docker-colletor-logs/filebeat-yml-script.py
 COPY $PACKAGE $PACKAGE
 
 RUN apk add --update --no-cache libc6-compat tar && \
-    tar --no-same-owner --strip-components=1 -zxf /opt/filebeat/"$PACKAGE" && \
+    tar -zxf /opt/filebeat/"$PACKAGE" && \
     rm -f "$PACKAGE" && \
-    wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/SectigoRSADomainValidationSecureServerCA.crt && \
+    wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/TrustExternalCARoot_and_USERTrustRSAAAACA.crt && \
     pip3 install -r ./docker-colletor-logs/requirements.txt --user && \
     rm -f ./docker-colletor-logs/requirements.txt
 
